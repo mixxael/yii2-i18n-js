@@ -1,0 +1,27 @@
+{
+  "name": "w3lifer/yii2-i18n-js",
+  "description": "Yii2 internationalization in JavaScript",
+  "keywords": [
+    "yii2",
+    "i18n",
+    "js"
+  ],
+  "type": "yii2-extension",
+  "require": {
+    "php": "^8.0",
+    "yiisoft/yii2": "^2.0",
+    "w3lifer/php-helper": "^1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "w3lifer\\Yii2\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Roman Grinyov",
+      "email": "w3lifer@gmail.com"
+    }
+  ],
+  "license": "MIT"
+}
