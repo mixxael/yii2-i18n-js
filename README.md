@@ -27,7 +27,7 @@ return [
             ],
         ],
         'i18nJs' => [
-            'class' => 'w3lifer\yii2\I18nJs',
+            'class' => \w3lifer\Yii2\I18nJs::class,
         ],
         // ...
     ],
@@ -37,17 +37,7 @@ return [
 
 ---
 
-**2. Initialize the `i18n` component anywhere, for example in `@app/views/layouts/main.php`:**
-
-``` php
-Yii::$app->i18nJs;
-```
-
-**Note**, you do not need to register the component in the places that will be processed with AJAX-requests (for example, in `@app/config/web.php` -> `bootstrap`, `on afterRequest`, etc), because it will be loaded twice, and it makes no sense.
-
----
-
-**3. Create `@app/messages/ru/app.php` with the following content:**
+**2. Create `@app/messages/ru/app.php` with the following content:**
 
 ``` php
 <?php
@@ -61,16 +51,14 @@ return [
 
 ---
 
-**4. Create `@app/controllers/I18nJsController`:**
+**3. Create `@app/controllers/I18nJsController`:**
 
 ``` php
 <?php
 
 namespace app\controllers;
 
-use yii\web\Controller;
-
-class I18nJsController extends Controller
+class I18nJsController extends \yii\web\Controller
 {
     public function actionIndex(): string
     {
@@ -81,13 +69,29 @@ class I18nJsController extends Controller
 
 ---
 
-**5. Create `@app/views/i-18-js/index.php`:**
+**4. Create `@app/views/i-18-js/index.php` ...**
+
+> **PLEASE NOTE** that the `i18n` component needs to be initialized before use.<br>
+> You can do this anywhere, for example in `@app/views/layouts/main.php`, just touch it.<br>
+
+``` php
+Yii::$app->i18nJs;
+```
+
+> **BUT** don't touch the component in places that will be handled by AJAX requests<br>
+> (e.g., in `@app/config/web.php` -> `bootstrap`, `on afterRequest`, etc),<br>
+> because it will be loaded twice and that doesn't make sense.
+
 
 ``` php
 <?php
 
 /**
+ * @see \app\controllers\I18nJsController::actionIndex()
+ *
  * @var \yii\web\View $this
+ *
+ * @see http://localhost:809/i-18n-js
  */
 
 Yii::$app->i18nJs;
@@ -111,7 +115,7 @@ $this->title = 'I18nJs';
 
 <?php
 
-// Use case #2 (the contents of the [i18nTest.js] file are the same as in use case #3)
+// Use case #2 (the contents of the [i18nTest.js] file are the same as in use case #1)
 
 $this->registerJsFile('/js/i18nTest.js');
 
@@ -128,7 +132,7 @@ JS);
 
 ---
 
-**6. Add `I18nJs::$jsFilename` (default: `@app/web/js/i18n.js`) to `@app/.gitignore`:**
+**5. Add `I18nJs::$jsFilename` (default: `@app/web/js/i18n.js`) to `@app/.gitignore`:**
 
 ``` gitignore
 # w3lifer/yii2-i18n-js
@@ -137,4 +141,4 @@ JS);
 
 ---
 
-**7. Go to http://example.com/i-18n-js and view the result in your browser console.**
+**6. Go to http://example.com/i-18n-js and view the result in your browser console.**
